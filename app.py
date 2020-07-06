@@ -9,6 +9,7 @@ class App:
         self.size = self.weight, self.height = 640, 400
         self._running = True
         self._display = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self._bg = rc.get_scaled_image('purple.png', self.size)
         self._clock = pygame.time.Clock()
         self._player = Player([(100, 0), (320, 30)], 100)
 
@@ -25,7 +26,7 @@ class App:
         self._player.update()
 
     def render(self):
-        self._display.fill(BLACK)
+        self._display.blit(self._bg, self._bg.get_rect())
         for pos in self._player._path._path:
             pygame.draw.circle(self._display, RED, pos, 7, 1)
         self._display.blit(self._player.image, self._player.rect)
