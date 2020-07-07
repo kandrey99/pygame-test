@@ -1,3 +1,4 @@
+import os
 import pygame
 from pygame import Surface
 from pygame.sprite import Sprite
@@ -13,7 +14,8 @@ class Player(Sprite):
     def __init__(self, path, velocity):
         super().__init__()
         self._path = Path(path, velocity)
-        self.images = (pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90),)
+        # self.images = (rc.get_image('playerShip1_blue.png'),)
+        self.images = [rc.get_image(os.path.join('dragon', f'{i:0>4}.png')) for i in range(16, 24)]
         self._animation = Animation(self.images, repeat=-1)
         # self._image = pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90)
         # self.image = self._image
@@ -23,7 +25,9 @@ class Player(Sprite):
     def update(self, *args):
         self.rect.center = self._path.get_position()
         self.image = self._animation.get_image()
-        self.image = pygame.transform.rotate(self.image, math.degrees(-self._path.slope))
+        # self.image = pygame.transform.rotate(self.image, math.degrees(-self._path.slope))
+        if math.pi/2 < self._path.slope <= math.pi or -math.pi < self._path.slope < -math.pi/2:
+            self.image = pygame.transform.flip(self.image, True, False)
         self.rect = self.image.get_rect(center=self.rect.center)
 
 
