@@ -13,8 +13,7 @@ class Player(Sprite):
     def __init__(self, path, velocity):
         super().__init__()
         self._path = Path(path, velocity)
-        self.images = (pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90),
-                       rc.get_image('playerShip1_blue.png'))
+        self.images = (pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90),)
         self._animation = Animation(self.images, repeat=-1)
         # self._image = pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90)
         # self.image = self._image
