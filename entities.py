@@ -4,21 +4,27 @@ from pygame.sprite import Sprite
 from pygame.font import Font
 from constants import *
 import resources as rc
-import math
 from path import Path
+from animation import Animation
+import math
 
 
 class Player(Sprite):
     def __init__(self, path, velocity):
         super().__init__()
         self._path = Path(path, velocity)
-        self._image = pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90)
-        self.image = self._image
+        self.images = (pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90),
+                       rc.get_image('playerShip1_blue.png'))
+        self._animation = Animation(self.images, repeat=-1)
+        # self._image = pygame.transform.rotate(rc.get_image('playerShip1_blue.png'), -90)
+        # self.image = self._image
+        self.image = self.images[0]
         self.rect = self.image.get_rect(center=path[0])
 
     def update(self, *args):
         self.rect.center = self._path.get_position()
-        self.image = pygame.transform.rotate(self._image, math.degrees(-self._path.slope))
+        self.image = self._animation.get_image()
+        self.image = pygame.transform.rotate(self.image, math.degrees(-self._path.slope))
         self.rect = self.image.get_rect(center=self.rect.center)
 
 

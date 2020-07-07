@@ -30,6 +30,7 @@ class Path:
     def get_position(self):
         now = pygame.time.get_ticks()
         elapsed = now - self._last_update
+        self._last_update = now
         for _ in range(elapsed // self._step):
             dv = self._step * self._velocity / 1000
             dx, dy = dv * math.cos(self.slope), dv * math.sin(self.slope)
@@ -42,5 +43,4 @@ class Path:
                 self._position = self._prev_point
             else:
                 self._position = self._position[0] + dx, self._position[1] + dy
-        self._last_update = now
         return self._position
