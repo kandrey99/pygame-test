@@ -15,7 +15,6 @@ class Path:
         self._prev_point = self._path[self._index]
         self._next_point = self._path[self._index + 1]
         self._position = self._prev_point
-        self._distance = self._get_distance(self._prev_point, self._next_point)
         self._last_update = pygame.time.get_ticks()
 
     @staticmethod
@@ -35,10 +34,9 @@ class Path:
             dist = self._get_distance(self._position, self._next_point)
             time = dist * 1000 / self._velocity
             if elapsed > time:
-                self._index = self._index + 1
+                self._index += 1
                 self._prev_point = self._path[self._index]
                 self._next_point = self._path[self._index + 1]
-                self._distance = self._get_distance(self._prev_point, self._next_point)
                 self._position = self._prev_point
                 elapsed -= time
             else:
