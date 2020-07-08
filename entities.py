@@ -5,7 +5,7 @@ from pygame.sprite import Sprite
 from pygame.font import Font
 from constants import *
 import resources as rc
-from path import Path
+from path import Path, AbstractPath
 from animation import Animation
 import math
 
@@ -26,7 +26,7 @@ class Player(Sprite):
         self.rect.center = self._path.get_position()
         self.image = self._animation.get_image()
         # self.image = pygame.transform.rotate(self.image, math.degrees(-self._path.slope))
-        if math.pi/2 < self._path.slope <= math.pi or -math.pi < self._path.slope < -math.pi/2:
+        if not -math.pi / 2 < self._path.slope < math.pi / 2:
             self.image = pygame.transform.flip(self.image, True, False)
         self.rect = self.image.get_rect(center=self.rect.center)
 
