@@ -12,7 +12,7 @@ class App:
         self._display = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._bg = rc.get_scaled_image('purple.png', self.size)
         self._clock = pygame.time.Clock()
-        self._player = Player([(100, 0), (320, 30)], 100)
+        self._player = Player(100, [(100, 130), (320, 150)])
 
     def on_event(self, event):
         if event.type == pygame.QUIT:

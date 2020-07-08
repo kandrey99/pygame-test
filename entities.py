@@ -11,9 +11,9 @@ import math
 
 
 class Player(Sprite):
-    def __init__(self, path, velocity):
+    def __init__(self, velocity, path):
         super().__init__()
-        self._path = Path(path, velocity)
+        self._path = Path(velocity, path)
         # self.images = (rc.get_image('playerShip1_blue.png'),)
         self.images = [rc.get_image(os.path.join('dragon', f'{i:0>4}.png')) for i in range(16, 24)]
         self._animation = Animation(self.images, repeat=-1)
