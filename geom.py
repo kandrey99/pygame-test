@@ -1,4 +1,5 @@
 import pygame as pg
+from collections import namedtuple
 import math
 
 BLACK = 0, 0, 0
@@ -8,9 +9,13 @@ GREEN = 0, 255, 0
 BLUE = 0, 0, 255
 
 
+Point = namedtuple('Point', 'x y')
+
+
 class Circle:
     def __init__(self):
         self._radius = 100
+        self._center = Point(150, 150)
         self._rot = 0
         self._rot_speed = math.pi / 2
         self._wave = list()
@@ -22,15 +27,16 @@ class Circle:
         self._rot -= (self._rot_speed * dt / 1000) % 360
         x = round(self._radius * math.cos(self._rot))
         y = round(self._radius * math.sin(self._rot))
+        center = self._center.x + x, self._center.y + y
         self._wave.append((x, y))
         for i, p in enumerate(self._wave):
-            pg.draw.circle(self.image, GREEN, (300 + i, 150 + p[1]), 1)
-            pg.draw.circle(self.image, RED, (150 + p[0], 300 + i), 1)
-        pg.draw.circle(self.image, WHITE, (150, 150), self._radius, 1)
-        pg.draw.circle(self.image, WHITE, (150 + x, 150 + y), 7)
-        pg.draw.line(self.image, WHITE, (150, 150), (150 + x, 150 + y))  # radius
-        pg.draw.line(self.image, BLUE, (150 + x, 150 + y), (300 + len(self._wave), 150 + self._wave[len(self._wave) - 1][1]))
-        pg.draw.line(self.image, BLUE, (150 + x, 150 + y), (150 + self._wave[len(self._wave) - 1][0], 300 + len(self._wave)))
+            pg.draw.circle(self.image, GREEN, (300 + i, self._center.y + p[1]), 1)
+            pg.draw.circle(self.image, RED, (self._center.x + p[0], 300 + i), 1)
+        pg.draw.circle(self.image, WHITE, self._center, self._radius, 1)
+        pg.draw.circle(self.image, WHITE, center, 7)
+        pg.draw.line(self.image, WHITE, self._center, center)  # radius
+        pg.draw.line(self.image, BLUE, center, (300 + len(self._wave), self._center.y + self._wave[len(self._wave) - 1][1]))
+        pg.draw.line(self.image, BLUE, center, (self._center.x + self._wave[len(self._wave) - 1][0], 300 + len(self._wave)))
         if len(self._wave) > 400:
             self._wave.pop()
 
